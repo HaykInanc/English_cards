@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="Q_word">#12112b</color>
+    <color name="A_word_us">#1a1850</color>
+    <color name="A_word_us_right">#146119</color>
+    <color name="A_word_us_wrong">#6e292b</color>
+    <color name="Q_word_interpretation">#4c4d56</color>
+</resources>
