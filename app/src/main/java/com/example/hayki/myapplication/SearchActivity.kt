@@ -5,45 +5,32 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import kotlinx.android.synthetic.main.search_lo.*
 import android.widget.Toast
 
 class SearchActivity: AppCompatActivity() {
 
-    internal lateinit var SearchBtn:Button;
-    internal lateinit var BackBtn:Button;
-    internal lateinit var EnglishWord:EditText;
-    internal lateinit var RussianWord:EditText;
-    internal lateinit var ResultText:TextView;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.vocabulary_lo)
+        setContentView(R.layout.search_lo)
 
-        SearchBtn   = findViewById<Button>(R.id.v_lo_SearchBtn)
-        BackBtn     = findViewById<Button>(R.id.v_lo_back)
-        EnglishWord = findViewById<EditText>(R.id.v_lo_english_word)
-        RussianWord = findViewById<EditText>(R.id.v_lo_russian_word)
-        ResultText  = findViewById<TextView>(R.id.v_lo_Result)
-
-        BackBtn.setOnClickListener(View.OnClickListener {
+        sLoBack.setOnClickListener(View.OnClickListener {
             back()
         })
-        SearchBtn.setOnClickListener(View.OnClickListener {
+        sLoSearchBtn.setOnClickListener(View.OnClickListener {
 
-            if (RussianWord.text.isNullOrEmpty() && EnglishWord.text.isNullOrEmpty()){
+            if (sLoRussianWord.text.isNullOrEmpty() && sLoEnglishWord.text.isNullOrEmpty()){
                 Toast.makeText(context, "Задайте параметры поиска", Toast.LENGTH_SHORT).show()
-                print(RussianWord.text.toString());
-                print(EnglishWord.text.toString());
+                print(sLoRussianWord.text.toString());
+                print(sLoEnglishWord.text.toString());
             }else{
                 var query:String = ""
                 var result:String
-                if(RussianWord.text.isNullOrEmpty()){
-                    query =  "where word = \'${EnglishWord.text.toString()}'"
-                }else if(EnglishWord.text.isNullOrEmpty()){
-                    query =  "where translate = \'${RussianWord.text.toString()}\'"
+                if(sLoRussianWord.text.isNullOrEmpty()){
+                    query =  "where word = \'${sLoEnglishWord.text.toString()}'"
+                }else if(sLoEnglishWord.text.isNullOrEmpty()){
+                    query =  "where translate = \'${sLoRussianWord.text.toString()}\'"
                 }
                 result = search(query);
                 showResult(result);
@@ -73,7 +60,7 @@ class SearchActivity: AppCompatActivity() {
     }
 
     fun showResult(data:String){
-        ResultText.text = data;
+        sLoResult.text = data;
     }
 
     fun back(){

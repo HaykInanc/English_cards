@@ -9,12 +9,12 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
 
 
-val DATABASE_NAME = "MyDB"
-val TABLE_NAME = "VocLib"
-val COLUMN_WORD = "word"
-val COLUMN_TRANSLATE = "translate"
-val COLUMN_INTERPRETATION = "interpretation"
-val COLUMN_ID = "id"
+val DATABASE_NAME           = "MyDB"
+val TABLE_NAME              = "VocLib"
+val COLUMN_WORD             = "word"
+val COLUMN_TRANSLATE        = "translate"
+val COLUMN_INTERPRETATION   = "interpretation"
+val COLUMN_ID               = "id"
 
 class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1){
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
