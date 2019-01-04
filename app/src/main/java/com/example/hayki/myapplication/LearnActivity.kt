@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.learn_lo.*
 import android.view.View
+import kotlinx.android.synthetic.main.learn_lo.*
 
 
 class LearnActivity : AppCompatActivity() {
@@ -20,34 +21,41 @@ class LearnActivity : AppCompatActivity() {
 
         viewWord()
 
-        lLoCheck.setOnClickListener(View.OnClickListener {
-            checkWord()
-        })
+        class CustomClickListener : View.OnClickListener {
+            override fun onClick(v: View) {
+                when (v.getId()) {
+                    R.id.lLoCheck -> checkWord()
+                    R.id.lLoNextWord -> viewWord()
+                }
+            }
+        }
+        lLoCheck.setOnClickListener(CustomClickListener())
+        lLoNextWord.setOnClickListener(CustomClickListener())
 
-
-        lLoNextWord.setOnClickListener(View.OnClickListener {
-            viewWord()
-        })
     }
-
-    val context = this
 
     fun viewWord(){
         lLoAnswer.setTextColor(Color.BLACK)
         var result:MutableList<MutableList<String>?>
-        var db = DataBaseHandler(context);
-        var cntRows: Int = db.getCnt();
+        var db = DataBaseHandler(this);
+        var cntRows: Int = db.libSize();
         var rowCnt = (1..cntRows).shuffled().first()
-        result = db.selectTable("where id = ${rowCnt}")
+        result = db.getData("where id = ${rowCnt}")
 
         if (result.isEmpty()){
-            println("undefined row with id = ${rowCnt}")
+            println(getString(R.string.undefinedRow) + "${rowCnt}")
         }else{
             val iterate = result?.listIterator()
             var result:String = "";
             val value = iterate?.next()
-            println("Слово: ${value?.get(0)} Перевод: ${value?.get(1)} \n Толкование: ${value?.get(2)} \n\n");
-            lLoWord.text   = value?.get(1)
+            println(getString(R.string.word)
+                    + ": ${value?.get(0)} "
+                    + getString(R.string.translate)
+                    + ": ${value?.get(1)} \n "
+                    + getString(R.string.interpretation)
+                    + ": ${value?.get(2)} \n\n");
+
+            lLoWord.text = value?.get(1)
             lLoAnswer.setText("")
             lLoRightAnswer.setText("")
             lLoInterp.setText("")
@@ -61,19 +69,12 @@ class LearnActivity : AppCompatActivity() {
     fun checkWord(){
         var answerVal = lLoAnswer.text.toString()
         if (dBword == answerVal){
-
-            println("WIN!")
             lLoAnswer.setTextColor(Color.GREEN)
-
-
         }else{
-            println("Louse!")
             lLoAnswer.setTextColor(Color.RED)
             lLoRightAnswer.text = dBword;
         }
         lLoInterp.text = dBinterp
-
-
     }
 
 }

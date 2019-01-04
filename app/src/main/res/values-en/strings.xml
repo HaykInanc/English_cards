@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="learn">Learn</string>
+    <string name="findTrans">Find translate</string>
+    <string name="addWord">Add word</string>
+    <string name="word">Word</string>
+    <string name="translate">Translate</string>
+    <string name="interpretation">Interpretation</string>
+    <string name="addWords">Add words</string>
+    <string name="back">Back</string>
+    <string name="check">Сheck</string>
+    <string name="nextWord">Next word</string>
+    <string name="find">Find</string>
+    <string name="addToDbError">Could not add data to database. Call Hayk please.</string>
+    <string name="undefinedRow">Undefined row with id =</string>
+    <string name="getSearchParams">Set search parameters</string>
+    <string name="emptySearchResult">There is not such word in dictionary</string>
+</resources>

@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Мое приложение</string>
+    <string name="learn">Учить</string>
+    <string name="findTrans">Найти перевод</string>
+    <string name="addWord">Добавить слово</string>
+    <string name="word">Слово</string>
+    <string name="translate">Перевод</string>
+    <string name="interpretation">Толкование</string>
+    <string name="addWords">Добавить слова</string>
+    <string name="back">Назад</string>
+    <string name="check">Проверить</string>
+    <string name="nextWord">Следующее слово</string>
+    <string name="find">Найти</string>
+    <string name="addToDbError">Не удалось добавить в бд, Скажи об этом Гайку.</string>
+    <string name="undefinedRow">Не найдена строчка с идентификатором =</string>
+    <string name="getSearchParams">Задайте параметры поиска</string>
+    <string name="emptySearchResult">Такого слова в Вашем словаре нет </string>
 </resources>

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.search_lo.*
 import android.widget.Toast
+import kotlinx.android.synthetic.main.add_lo.*
 
 class SearchActivity: AppCompatActivity() {
 
@@ -15,35 +16,34 @@ class SearchActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search_lo)
 
-        sLoBack.setOnClickListener(View.OnClickListener {
-            back()
-        })
-        sLoSearchBtn.setOnClickListener(View.OnClickListener {
-
-            if (sLoRussianWord.text.isNullOrEmpty() && sLoEnglishWord.text.isNullOrEmpty()){
-                Toast.makeText(context, "Задайте параметры поиска", Toast.LENGTH_SHORT).show()
-                print(sLoRussianWord.text.toString());
-                print(sLoEnglishWord.text.toString());
-            }else{
-                var query:String = ""
-                var result:String
-                if(sLoRussianWord.text.isNullOrEmpty()){
-                    query =  "where word = \'${sLoEnglishWord.text.toString()}'"
-                }else if(sLoEnglishWord.text.isNullOrEmpty()){
-                    query =  "where translate = \'${sLoRussianWord.text.toString()}\'"
+        class CustomClickListener : View.OnClickListener {
+            override fun onClick(v: View) {
+                when (v.getId()) {
+                    R.id.sLoSearchBtn -> searchBtnHandler()
+                    R.id.sLoBack -> back()
                 }
-                result = search(query);
-                showResult(result);
             }
-        })
+        }
+
+        sLoSearchBtn.setOnClickListener(CustomClickListener())
+        sLoBack.setOnClickListener(CustomClickListener())
     }
-    var context = this;
+
+    fun searchBtnHandler(){
+        if (sLoWord.text.isNullOrEmpty()){
+            Toast.makeText(this, getString(R.string.getSearchParams), Toast.LENGTH_SHORT).show()
+        }else{
+            var query:String = "where word like (\'%${sLoWord.text.toString()}%\') or translate like \'%${sLoWord.text.toString()}%\'"
+            var result:String = search(query);
+            showResult(result);
+        }
+    }
 
     fun search(query:String):String{
-        var badResult:String = "Такого слова в Вашем словаре нет =("
+        var badResult:String = getString(R.string.emptySearchResult)
         var goodResult:MutableList<MutableList<String>?>
-        var db = DataBaseHandler(context);
-        goodResult = db.selectTable(query)
+        var db = DataBaseHandler(this);
+        goodResult = db.getData(query)
 
         if (goodResult.isEmpty()){
             return badResult
@@ -52,7 +52,12 @@ class SearchActivity: AppCompatActivity() {
             var result:String = "";
             do {
                 val value = iterate?.next()
-                result += "Слово: ${value?.get(0)} Перевод: ${value?.get(1)} \n Толкование: ${value?.get(2)} \n\n";
+                result += (getString(R.string.word)
+                + ": ${value?.get(0)} "
+                + getString(R.string.translate)
+                + ": ${value?.get(1)} \n "
+                + getString(R.string.interpretation)
+                + ": ${value?.get(2)} \n\n");
             }while (iterate.hasNext())
             return result
         }
@@ -64,8 +69,7 @@ class SearchActivity: AppCompatActivity() {
     }
 
     fun back(){
-        val intent = Intent(this,MainActivity::class.java)
-        startActivity(intent)
+        this.finish()
     }
 
 }

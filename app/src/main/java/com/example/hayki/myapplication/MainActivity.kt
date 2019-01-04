@@ -12,24 +12,36 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mainLoLearnBtn.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this,LearnActivity::class.java)
-            startActivity(intent)
-        })
+        class CustomClickListener : View.OnClickListener {
+            override fun onClick(v: View) {
+                when (v.getId()) {
+                    R.id.mainLoLearnBtn -> goToLearn()
+                    R.id.mainLoAddBtn -> goToAdd()
+                    R.id.mainLoSearchBtn -> goToSearch()
 
+                }
+            }
+        }
+        mainLoLearnBtn.setOnClickListener(CustomClickListener())
+        mainLoAddBtn.setOnClickListener(CustomClickListener())
+        mainLoSearchBtn.setOnClickListener(CustomClickListener())
 
-        mainLoAddBtn.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this,AddActivity::class.java)
-            startActivity(intent)
-        })
-
-        mainLoSearchBtn.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this,SearchActivity::class.java)
-            startActivity(intent)
-        })
     }
 
-    var context = this;
+    fun goToLearn(){
+        val intent = Intent(this,LearnActivity::class.java)
+        startActivity(intent)
+    }
 
+
+    fun goToAdd(){
+        val intent = Intent(this,AddActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun goToSearch(){
+        val intent = Intent(this,SearchActivity::class.java)
+        startActivity(intent)
+    }
 
 }

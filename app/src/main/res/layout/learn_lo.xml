@@ -46,7 +46,7 @@
             android:textAlignment="center"
             android:textSize="40dp"/>
     <Button
-            android:text="проверить"
+            android:text="@string/check"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/lLoCheck" android:layout_marginTop="8dp"
@@ -67,7 +67,7 @@
             android:textColor="@color/Q_word_interpretation"
             android:textSize="15dp"/>
     <Button
-            android:text="следующее слово"
+            android:text="@string/nextWord"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/lLoNextWord" app:layout_constraintEnd_toStartOf="@+id/lLoCheck"

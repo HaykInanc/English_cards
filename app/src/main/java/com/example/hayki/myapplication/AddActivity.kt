@@ -7,21 +7,28 @@ import kotlinx.android.synthetic.main.add_lo.*
 import android.view.View
 import android.widget.Toast
 
+
+
 class AddActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_lo)
 
-        addLoAddWord.setOnClickListener(View.OnClickListener {
-            insertHandler()
-        })
+        class CustomClickListener : View.OnClickListener {
+            override fun onClick(v: View) {
+                when (v.getId()) {
+                    R.id.addLoAddWord -> insertHandler()
+                    R.id.selectBtn -> back()
+                }
+            }
+        }
 
-        selectBtn.setOnClickListener(View.OnClickListener {
-            back()
-        })
+        addLoAddWord.setOnClickListener(CustomClickListener())
+        selectBtn.setOnClickListener(CustomClickListener())
+
     }
-    var context = this;
+
 
     fun insertHandler(){
         if (addLoWord.text.toString().length > 0
@@ -29,16 +36,15 @@ class AddActivity : AppCompatActivity() {
             var newWord = VocLib(addLoWord.text.toString(),
                 addLoTrans.text.toString(),
                 addLoInterp.text.toString())
-            var db = DataBaseHandler(context)
+            var db = DataBaseHandler(this)
             db.insertData(newWord);
         }else{
-            Toast.makeText(context, "Не удалось добавить в бд, Скажи об этом Гайку.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.addToDbError), Toast.LENGTH_SHORT).show()
         }
     }
 
     fun back(){
-        val intent = Intent(this,MainActivity::class.java)
-        startActivity(intent)
+        this.finish()
     }
 
 }

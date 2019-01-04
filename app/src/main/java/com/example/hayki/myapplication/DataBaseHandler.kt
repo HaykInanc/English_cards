@@ -48,7 +48,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
     }
 
 
-    fun selectTable(cond:String = ""):MutableList<MutableList<String>?>{
+    fun getData(cond:String = ""):MutableList<MutableList<String>?>{
         val db = this.writableDatabase
         var query = "select * from " + TABLE_NAME + " ${cond}"
         println(query)
@@ -69,7 +69,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         return output
     }
 
-    fun getCnt():Int{
+    fun libSize():Int{
         val db = this.writableDatabase
         var query = "select count(*) as cnt_ from " + TABLE_NAME
         val result = db.rawQuery(query, null)
